@@ -1,3 +1,4 @@
+
 import React from "react";
 import MainLayout from "../components/Layout/MainLayout";
 import HealthSummaryCard from "../components/Dashboard/HealthSummaryCard";
@@ -7,6 +8,8 @@ import HospitalRecommendationsCard from "../components/Dashboard/HospitalRecomme
 import UploadReportCard from "../components/Dashboard/UploadReportCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
 
 // Mock data
 const healthMetrics = [
@@ -103,6 +106,15 @@ const healthInsights = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  
+  const handleScheduleAppointment = () => {
+    toast({
+      title: "Schedule Appointment",
+      description: "Appointment scheduling feature coming soon",
+    });
+  };
+
   return (
     <MainLayout>
       <div className="mb-6">
@@ -182,7 +194,7 @@ const Dashboard = () => {
               </div>
               
               <div className="mt-4">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={handleScheduleAppointment}>
                   Schedule New Appointment
                 </Button>
               </div>
@@ -195,21 +207,39 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="bg-blue-50 p-3 rounded-lg">
+                <div 
+                  className="bg-blue-50 p-3 rounded-lg cursor-pointer hover:bg-blue-100 transition-colors"
+                  onClick={() => toast({
+                    title: "Resource",
+                    description: "Understanding Your Blood Work resource opened"
+                  })}
+                >
                   <h4 className="font-medium text-blue-700">Understanding Your Blood Work</h4>
                   <p className="text-sm text-gray-600 mt-1">
                     Learn what your recent blood test results mean
                   </p>
                 </div>
                 
-                <div className="bg-green-50 p-3 rounded-lg">
+                <div 
+                  className="bg-green-50 p-3 rounded-lg cursor-pointer hover:bg-green-100 transition-colors"
+                  onClick={() => toast({
+                    title: "Resource",
+                    description: "Healthy Heart Tips resource opened"
+                  })}
+                >
                   <h4 className="font-medium text-green-700">Healthy Heart Tips</h4>
                   <p className="text-sm text-gray-600 mt-1">
                     Simple lifestyle changes for heart health
                   </p>
                 </div>
                 
-                <div className="bg-purple-50 p-3 rounded-lg">
+                <div 
+                  className="bg-purple-50 p-3 rounded-lg cursor-pointer hover:bg-purple-100 transition-colors"
+                  onClick={() => toast({
+                    title: "Resource",
+                    description: "Medication Guide resource opened"
+                  })}
+                >
                   <h4 className="font-medium text-purple-700">Medication Guide</h4>
                   <p className="text-sm text-gray-600 mt-1">
                     Information about your prescribed medications

@@ -1,4 +1,3 @@
-
 import React from "react";
 import MainLayout from "../components/Layout/MainLayout";
 import { Button } from "@/components/ui/button";
@@ -17,8 +16,8 @@ import {
   FilePlus,
   Download,
   Share2,
-  Upload,  // Added missing Upload icon
-  Plus     // Added missing Plus icon
+  Upload,  
+  Plus     
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,6 +28,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 // Mock data
 const recentReports = [
@@ -121,6 +122,57 @@ const Reports = () => {
     }
   };
 
+  const handleDownload = (reportId: string) => {
+    toast({
+      title: "Download started",
+      description: `Report ${reportId} is being downloaded`,
+    });
+  };
+
+  const handleShare = (reportId: string) => {
+    toast({
+      title: "Share options",
+      description: "Sharing options opened for report " + reportId,
+    });
+  };
+
+  const handleViewReport = (reportId: string) => {
+    toast({
+      title: "Opening report",
+      description: "Loading report details...",
+    });
+  };
+
+  const handleUploadReport = () => {
+    toast({
+      title: "Upload initiated",
+      description: "Please select a file to upload",
+    });
+  };
+
+  const handleFilterSelect = (filterType: string) => {
+    toast({
+      title: "Filter applied",
+      description: `Reports filtered by: ${filterType}`,
+    });
+  };
+  
+  const handleViewAnalytics = () => {
+    toast({
+      title: "Analytics",
+      description: "Detailed analytics view is coming soon",
+    });
+  };
+
+  const handleFileSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      toast({
+        title: "File selected",
+        description: `Selected file: ${e.target.files[0].name}`,
+      });
+    }
+  };
+
   return (
     <MainLayout>
       <div className="mb-6">
@@ -150,20 +202,20 @@ const Reports = () => {
                     <DropdownMenuContent align="end" className="w-60">
                       <DropdownMenuLabel>Filter Reports</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>All Types</DropdownMenuItem>
-                      <DropdownMenuItem>Lab Reports</DropdownMenuItem>
-                      <DropdownMenuItem>Imaging Reports</DropdownMenuItem>
-                      <DropdownMenuItem>General Reports</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("All Types")}>All Types</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("Lab Reports")}>Lab Reports</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("Imaging Reports")}>Imaging Reports</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("General Reports")}>General Reports</DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Date: Newest First</DropdownMenuItem>
-                      <DropdownMenuItem>Date: Oldest First</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("Date: Newest First")}>Date: Newest First</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("Date: Oldest First")}>Date: Oldest First</DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>Status: All</DropdownMenuItem>
-                      <DropdownMenuItem>Status: New</DropdownMenuItem>
-                      <DropdownMenuItem>Status: Flagged</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("Status: All")}>Status: All</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("Status: New")}>Status: New</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleFilterSelect("Status: Flagged")}>Status: Flagged</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  <Button>Upload Report</Button>
+                  <Button onClick={handleUploadReport}>Upload Report</Button>
                 </div>
               </div>
 
@@ -198,15 +250,16 @@ const Reports = () => {
                               <p className="text-sm text-gray-500">Doctor: {report.doctor}</p>
                             </div>
                             <div className="flex space-x-2">
-                              <Button variant="ghost" size="icon">
+                              <Button variant="ghost" size="icon" onClick={() => handleDownload(report.id)}>
                                 <Download className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon">
+                              <Button variant="ghost" size="icon" onClick={() => handleShare(report.id)}>
                                 <Share2 className="h-4 w-4" />
                               </Button>
                               <Button
                                 variant="outline"
                                 className="text-health-primary border-health-primary hover:bg-health-primary hover:text-white"
+                                onClick={() => handleViewReport(report.id)}
                               >
                                 View Report
                               </Button>
@@ -243,15 +296,16 @@ const Reports = () => {
                                 <p className="text-sm text-gray-500">Doctor: {report.doctor}</p>
                               </div>
                               <div className="flex space-x-2">
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" size="icon" onClick={() => handleDownload(report.id)}>
                                   <Download className="h-4 w-4" />
                                 </Button>
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" size="icon" onClick={() => handleShare(report.id)}>
                                   <Share2 className="h-4 w-4" />
                                 </Button>
                                 <Button
                                   variant="outline"
                                   className="text-health-primary border-health-primary hover:bg-health-primary hover:text-white"
+                                  onClick={() => handleViewReport(report.id)}
                                 >
                                   View Report
                                 </Button>
@@ -288,15 +342,16 @@ const Reports = () => {
                                 <p className="text-sm text-gray-500">Doctor: {report.doctor}</p>
                               </div>
                               <div className="flex space-x-2">
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" size="icon" onClick={() => handleDownload(report.id)}>
                                   <Download className="h-4 w-4" />
                                 </Button>
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" size="icon" onClick={() => handleShare(report.id)}>
                                   <Share2 className="h-4 w-4" />
                                 </Button>
                                 <Button
                                   variant="outline"
                                   className="text-health-primary border-health-primary hover:bg-health-primary hover:text-white"
+                                  onClick={() => handleViewReport(report.id)}
                                 >
                                   View Report
                                 </Button>
@@ -333,15 +388,16 @@ const Reports = () => {
                                 <p className="text-sm text-gray-500">Doctor: {report.doctor}</p>
                               </div>
                               <div className="flex space-x-2">
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" size="icon" onClick={() => handleDownload(report.id)}>
                                   <Download className="h-4 w-4" />
                                 </Button>
-                                <Button variant="ghost" size="icon">
+                                <Button variant="ghost" size="icon" onClick={() => handleShare(report.id)}>
                                   <Share2 className="h-4 w-4" />
                                 </Button>
                                 <Button
                                   variant="outline"
                                   className="text-health-primary border-health-primary hover:bg-health-primary hover:text-white"
+                                  onClick={() => handleViewReport(report.id)}
                                 >
                                   View Report
                                 </Button>
@@ -380,10 +436,12 @@ const Reports = () => {
                         type="file"
                         className="sr-only"
                         accept=".pdf,.jpg,.jpeg,.png"
+                        onChange={handleFileSelection}
                       />
                       <Button 
                         variant="outline" 
                         className="text-health-primary border-health-primary hover:bg-health-primary hover:text-white"
+                        onClick={() => document.getElementById('file-upload-reports')?.click()}
                       >
                         <Plus className="h-4 w-4 mr-2" />
                         Browse Files
@@ -429,7 +487,7 @@ const Reports = () => {
                   </div>
                 </div>
 
-                <Button className="w-full">View Detailed Analytics</Button>
+                <Button className="w-full" onClick={handleViewAnalytics}>View Detailed Analytics</Button>
               </div>
             </CardContent>
           </Card>
