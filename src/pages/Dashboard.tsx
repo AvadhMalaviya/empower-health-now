@@ -1,4 +1,3 @@
-
 import React from "react";
 import MainLayout from "../components/Layout/MainLayout";
 import HealthSummaryCard from "../components/Dashboard/HealthSummaryCard";
@@ -7,6 +6,7 @@ import HealthInsightsCard from "../components/Dashboard/HealthInsightsCard";
 import HospitalRecommendationsCard from "../components/Dashboard/HospitalRecommendationsCard";
 import UploadReportCard from "../components/Dashboard/UploadReportCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 // Mock data
 const healthMetrics = [

@@ -16,7 +16,9 @@ import {
   FileImage,
   FilePlus,
   Download,
-  Share2
+  Share2,
+  Upload,  // Added missing Upload icon
+  Plus     // Added missing Plus icon
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
