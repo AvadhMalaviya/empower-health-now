@@ -8,10 +8,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useForm } from "react-hook-form";
 import { toast } from "@/components/ui/sonner";
 import { UserPlus } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const Register = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
   
   const form = useForm({
     defaultValues: {
@@ -37,14 +39,20 @@ const Register = () => {
       console.log("Registration attempt:", data);
       
       // For demo purposes, always succeed
-      localStorage.setItem("healthAnalyticsUser", JSON.stringify({
+      const userData = {
         name: data.name,
         email: data.email,
         role: "patient"
-      }));
+      };
+      
+      // Use the login function from AuthContext to log the user in after registration
+      login(userData);
       
       toast.success("Account created successfully!");
+      
+      // Redirect to home page after successful registration
       navigate("/");
+      
       setIsLoading(false);
     }, 1500);
   };

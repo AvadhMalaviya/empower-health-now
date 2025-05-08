@@ -8,10 +8,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useForm } from "react-hook-form";
 import { toast } from "@/components/ui/sonner";
 import { LogIn, User } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
   
   const form = useForm({
     defaultValues: {
@@ -28,14 +30,20 @@ const Login = () => {
       console.log("Login attempt:", data);
       
       // For demo purposes, always succeed
-      localStorage.setItem("healthAnalyticsUser", JSON.stringify({
+      const userData = {
         name: "Demo User",
         email: data.email,
         role: "patient"
-      }));
+      };
+      
+      // Use the login function from AuthContext
+      login(userData);
       
       toast.success("Login successful!");
+      
+      // Redirect to home page after successful login
       navigate("/");
+      
       setIsLoading(false);
     }, 1500);
   };

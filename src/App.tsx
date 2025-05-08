@@ -34,10 +34,14 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AppRoutes = () => {
+  const { user } = useAuth();
+  
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      {/* Redirect to dashboard if already logged in */}
+      <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
+      <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register />} />
+      
       <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
       <Route path="/hospitals" element={<ProtectedRoute><Hospitals /></ProtectedRoute>} />
